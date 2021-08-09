@@ -20,46 +20,55 @@
     </div>
 
     <div class="center">
+      <div class="mb-3">
+        <label for="" class="form-label">Drinks</label>
+        <input type="text" class="form-control" v-model="drinks" />
+      </div>
       <form v-on:submit.prevent="submit()">
         <div>
-          <label for="" class="form-label">Drinks</label>
-          <input
+          <!-- <input
             v-for="drink in drinks"
             v-bind:key="drink.description"
             type="text"
             class="form-control"
             v-model="drinks"
-          />
+          /> -->
           <form action="">
             <!-- \/  need to add v-on:click="addField()" functionality \/ -->
             <button style="color: #e24c27" type="button" class="btn btn-light">+Add another</button>
           </form>
         </div>
 
-        <div>
+        <div class="mb-3">
           <label for="" class="form-label">Snacks</label>
-          <input
+          <input type="text" class="form-control" v-model="snacks" />
+        </div>
+        <div>
+          <!-- <input
             v-for="snack in snacks"
             v-bind:key="snack.description"
             type="text"
             class="form-control"
             v-model="snacks"
-          />
+          /> -->
           <form action="">
             <!-- \/  need to add v-on:click="addField()" functionality \/ -->
             <button style="color: #e24c27" type="button" class="btn btn-light">+Add another</button>
           </form>
         </div>
 
-        <div>
+        <div class="mb-3">
           <label for="" class="form-label">People</label>
-          <input
+          <input type="text" class="form-control" v-model="people" />
+        </div>
+        <div>
+          <!-- <input
             v-for="person in people"
             v-bind:key="person.description"
             type="text"
             class="form-control"
             v-model="people"
-          />
+          /> -->
           <form action="">
             <!-- \/  need to add v-on:click="addField()" functionality \/ -->
             <button style="color: #e24c27" type="button" class="btn btn-light">+Add another</button>
