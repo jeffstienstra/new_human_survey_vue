@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="favorites">
     <br />
     <br />
     <div class="center">
@@ -7,7 +7,7 @@
         <div
           class="progress-bar"
           role="progressbar"
-          style="width: 33%"
+          style="width: 66%"
           aria-valuenow="33"
           aria-valuemin="0"
           aria-valuemax="100"
@@ -16,33 +16,30 @@
     </div>
     <br />
     <div>
-      <h1 style="color: #e24c27">About you</h1>
-    </div>
-    <div id="emailHelp" class="form-text" v-for="error in errors" v-bind:key="error">
-      {{ error }}
+      <h1 style="color: #e24c27">Your favorites</h1>
     </div>
 
     <div class="center">
       <form v-on:submit.prevent="submit()">
         <div class="mb-3">
-          <label for="" class="form-label">Name</label>
-          <input type="text" class="form-control" v-model="name" />
+          <label for="" class="form-label">Drinks</label>
+          <input type="text" class="form-control" v-model="drinks" />
         </div>
         <div class="mb-3">
-          <label for="" class="form-label">What is an accomplishment you are really proud of?</label>
-          <input type="text" class="form-control" v-model="accomplishments" />
+          <label for="" class="form-label">Snacks</label>
+          <input type="text" class="form-control" v-model="snacks" />
         </div>
         <div class="mb-3">
-          <label for="" class="form-label">What is your superpower?</label>
-          <input type="text" class="form-control" v-model="superpower" />
+          <label for="" class="form-label">People in your life, relationship</label>
+          <input type="text" class="form-control" v-model="people" />
         </div>
 
         <div class="container">
           <div class="row">
             <div class="col">
-              <form action="/landingpage">
+              <form action="/about">
                 <div class="d-grid gap-0 col-13 mx-auto">
-                  <button type="submit" class="btn btn-secondary btn-sm" action="/landingpage">Back</button>
+                  <button type="submit" class="btn btn-secondary btn-sm" action="/about">Back</button>
                 </div>
               </form>
             </div>
@@ -78,31 +75,37 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      name: "",
-      accomplishments: "",
-      superpower: "",
-      errors: [],
+      drinks: [],
+      snacks: [],
+      people: [],
     };
   },
   created: function () {},
+
   methods: {
+    // favoritesIndex: function () {
+    //   axios.post("/favorites").then((response) => {
+    //     console.log("Favorites ->", response);
+    //     this.myFavorites = response.data;
+    //   });
+    // },
     submit: function () {
       var params = {
-        name: this.name,
-        accomplishments: this.accomplishments,
-        superpower: this.superpower,
+        drinks: this.drinks,
+        snacks: this.snacks,
+        people: this.people,
       };
       console.log(params);
       axios
-        .post("/about", params)
+        .post("/favorites", params)
         .then((response) => {
           axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
-          this.$router.push("/favorites");
+          this.$router.push("/goals");
         })
         .catch((error) => {
           console.log(error.response);
-          this.errors = error.response.data.errors;
+          this.errors = error.response;
         });
     },
   },
