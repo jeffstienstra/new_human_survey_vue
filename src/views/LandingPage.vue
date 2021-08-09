@@ -1,7 +1,7 @@
 <template>
   <div class="landingpage">
     <!-- show this if survey_complete == false -->
-    <div class="take_survey" v-if="survey_complete">
+    <div class="take_survey" v-if="!survey_complete">
       <br />
       <br />
       <div>
@@ -152,14 +152,16 @@ export default {
       console.log(this.user);
       axios.get("/users/:id").then((response) => {
         console.log("userShow ->", response.data);
-        console.log("#1", response.data.favorites.drinks[0].description);
+        // console.log("#1", response.data.favorites.drinks[0].description);
 
         //check survey status for user
+        console.log("user-survey", response.data.survey_complete);
         if (response.data.survey_complete == true) {
           this.survey_complete = true;
         } else {
           this.survey_complete = false;
         }
+        console.log("this.survey_complete", this.survey_complete);
 
         // get user's name
         this.name = response.data.abouts[0].name;

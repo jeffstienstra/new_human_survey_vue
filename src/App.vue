@@ -8,7 +8,7 @@
     |
     <router-link to="/goals">Goals</router-link>
     |
-    <router-link to="/signup">Sign Up</router-link>
+    <router-link to="/">Sign Up</router-link>
     |
     <router-link to="/signin">Sign In</router-link>
     |

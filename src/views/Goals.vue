@@ -35,7 +35,7 @@
             <textarea type="text" class="form-control" v-model="long_term_goals"></textarea>
           </div>
         </div>
-
+        <br />
         <div class="container">
           <div class="row">
             <div class="col">
@@ -102,25 +102,6 @@ export default {
         var data = response.data;
         console.log(data);
 
-        //check survey status for user
-        if (response.data.survey_complete == true) {
-          this.survey_complete = false;
-        } else {
-          this.survey_complete = true;
-        }
-
-        // get user's name
-        this.name = response.data.abouts[0].name;
-        console.log("name ->", response.data.abouts[0].name);
-
-        //get user's accomplishments
-        this.accomplishments = response.data.abouts[0].accomplishments;
-        console.log("acomplishments ->", response.data.abouts[0].accomplishments);
-
-        //get user's superpower
-        this.superpower = response.data.abouts[0].superpower;
-        console.log("superpower ->", response.data.abouts[0].superpower);
-
         //get user's short_term_goals
         this.short_term_goals = response.data.goals[0].short_term_goal;
         console.log("short_term_goals ->", response.data.goals[0].short_term_goal);
@@ -128,36 +109,6 @@ export default {
         //get user's long_term_goals
         this.long_term_goals = response.data.goals[0].long_term_goal;
         console.log("long_term_goals ->", response.data.goals[0].long_term_goal);
-
-        // get user's drinks
-        var userDrinks = [];
-        var i = 0;
-        while (i < response.data.favorites.drinks.length) {
-          userDrinks.push(response.data.favorites.drinks[i].description);
-          i++;
-        }
-        console.log(userDrinks);
-        this.drinks = userDrinks;
-
-        // get user's snacks
-        var userSnacks = [];
-        i = 0;
-        while (i < response.data.favorites.snacks.length) {
-          userSnacks.push(response.data.favorites.snacks[i].description);
-          i++;
-        }
-        console.log(userSnacks);
-        this.snacks = userSnacks;
-
-        // get user's people
-        var userPeople = [];
-        i = 0;
-        while (i < response.data.favorites.people.length) {
-          userPeople.push(response.data.favorites.people[i].description);
-          i++;
-        }
-        console.log(userPeople);
-        this.people = userPeople;
       });
     },
     submit: function () {

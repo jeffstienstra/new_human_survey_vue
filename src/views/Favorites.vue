@@ -21,19 +21,51 @@
 
     <div class="center">
       <form v-on:submit.prevent="submit()">
-        <div class="mb-3">
+        <div>
           <label for="" class="form-label">Drinks</label>
-          <input type="text" class="form-control" v-model="drinks" />
-        </div>
-        <div class="mb-3">
-          <label for="" class="form-label">Snacks</label>
-          <input type="text" class="form-control" v-model="snacks" />
-        </div>
-        <div class="mb-3">
-          <label for="" class="form-label">People in your life, relationship</label>
-          <input type="text" class="form-control" v-model="people" />
+          <input
+            v-for="drink in drinks"
+            v-bind:key="drink.description"
+            type="text"
+            class="form-control"
+            v-model="drinks"
+          />
+          <form action="">
+            <!-- \/  need to add v-on:click="addField()" functionality \/ -->
+            <button style="color: #e24c27" type="button" class="btn btn-light">+Add another</button>
+          </form>
         </div>
 
+        <div>
+          <label for="" class="form-label">Snacks</label>
+          <input
+            v-for="snack in snacks"
+            v-bind:key="snack.description"
+            type="text"
+            class="form-control"
+            v-model="snacks"
+          />
+          <form action="">
+            <!-- \/  need to add v-on:click="addField()" functionality \/ -->
+            <button style="color: #e24c27" type="button" class="btn btn-light">+Add another</button>
+          </form>
+        </div>
+
+        <div>
+          <label for="" class="form-label">People</label>
+          <input
+            v-for="person in people"
+            v-bind:key="person.description"
+            type="text"
+            class="form-control"
+            v-model="people"
+          />
+          <form action="">
+            <!-- \/  need to add v-on:click="addField()" functionality \/ -->
+            <button style="color: #e24c27" type="button" class="btn btn-light">+Add another</button>
+          </form>
+        </div>
+        <br />
         <div class="container">
           <div class="row">
             <div class="col">
@@ -63,6 +95,7 @@
 .btn-primary:visited {
   background-color: #e24c27 !important;
 }
+
 .btn-secondary {
   background-color: #dadada !important;
   color: #404040;
@@ -85,38 +118,14 @@ export default {
   },
 
   methods: {
+    // addField: function () {
+    //   this.drinks.push({ description: "" });
+    // },
     userShow: function () {
       console.log(this.user);
       axios.get("/users/:id").then((response) => {
         console.log("userShow ->", response.data);
         console.log("#1", response.data.favorites.drinks[0].description);
-
-        //check survey status for user
-        if (response.data.survey_complete == true) {
-          this.survey_complete = false;
-        } else {
-          this.survey_complete = true;
-        }
-
-        // get user's name
-        this.name = response.data.abouts[0].name;
-        console.log("name ->", response.data.abouts[0].name);
-
-        //get user's accomplishments
-        this.accomplishments = response.data.abouts[0].accomplishments;
-        console.log("acomplishments ->", response.data.abouts[0].accomplishments);
-
-        //get user's superpower
-        this.superpower = response.data.abouts[0].superpower;
-        console.log("superpower ->", response.data.abouts[0].superpower);
-
-        //get user's short_term_goals
-        this.short_term_goals = response.data.goals[0].short_term_goal;
-        console.log("short_term_goals ->", response.data.goals[0].short_term_goal);
-
-        //get user's long_term_goals
-        this.long_term_goals = response.data.goals[0].long_term_goal;
-        console.log("long_term_goals ->", response.data.goals[0].long_term_goal);
 
         // get user's drinks
         var userDrinks = [];
@@ -148,9 +157,6 @@ export default {
         console.log(userPeople);
         this.people = userPeople;
       });
-      // .catch((error) => {
-      //   this.errors = error.response.data.errors;
-      // });
     },
     submit: function () {
       var params = {
