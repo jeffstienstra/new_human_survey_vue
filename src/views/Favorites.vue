@@ -16,7 +16,7 @@
     </div>
     <br />
     <div>
-      <h1 style="color: #e24c27">Your favorites</h1>
+      <h1 class="title" style="color: #e24c27">Your favorites</h1>
     </div>
 
     <div class="center">

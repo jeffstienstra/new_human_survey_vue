@@ -40,6 +40,17 @@
   color: #42b983;
 }
 
+/* @font-face {
+  src: url(fonts/nightype.ttf);
+  font-family: "nightype";
+  font-style: normal;
+  font-weight: 100;
+} */
+
+/* .title {
+  font-family: nightype;
+} */
+
 body {
   background-color: #fafcfe !important;
 }
