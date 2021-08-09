@@ -1,11 +1,5 @@
 <template>
   <div id="app">
-    <router-link to="/signup">Sign Up</router-link>
-    |
-    <router-link to="/signin">Sign In</router-link>
-    |
-    <router-link to="/signout">Sign Out</router-link>
-    |
     <router-link to="/landingpage">Landing Page</router-link>
     |
     <router-link to="/about">About</router-link>
@@ -13,6 +7,12 @@
     <router-link to="/favorites">Favorites</router-link>
     |
     <router-link to="/goals">Goals</router-link>
+    |
+    <router-link to="/signup">Sign Up</router-link>
+    |
+    <router-link to="/signin">Sign In</router-link>
+    |
+    <router-link to="/signout">Sign Out</router-link>
 
     <router-view />
   </div>
