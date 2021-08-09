@@ -3,7 +3,7 @@
     <!-- show this is survey_complete == false -->
     <!-- \/  add v-if="!survey_complete()" to take-survey div  \/ -->
 
-    <div class="take_survey" v-if="!survey_complete()">
+    <div class="take_survey" v-if="survey_complete">
       <br />
       <br />
       <div>
@@ -29,7 +29,7 @@
 
     <!-- show this is survey_complete == true  -->
     <!-- \/  add v-if="survey_complete()" to survey-results div  \/ -->
-    <div class="survey-results" v-if="{{survey_complete}}">
+    <div class="survey-results" v-if="!survey_complete">
       <br />
       <br />
       <div>
@@ -138,18 +138,18 @@ export default {
       short_term_goals: "",
       long_term_goals: "",
       user: [],
-      survey_complete: [false],
+      survey_complete: [],
     };
   },
   mounted() {},
   created: function () {
-    // this.survey_complete();
+    // this.survey_status();
     this.userShow();
   },
   methods: {
-    // survey_complete: function () {
-    //   console.log(this.user);
-    //   return false;
+    // survey_status: function () {
+    //   console.log("user->", this.user);
+    //   return true;
     // },
     userShow: function () {
       console.log(this.user);
@@ -159,8 +159,10 @@ export default {
         // this.$router.push("/signin");
 
         //check survey status for user
-        if (response.data.survey_complete == false) {
+        if (response.data.survey_complete == true) {
           this.survey_complete = false;
+        } else {
+          this.survey_complete = true;
         }
 
         // get user's name
