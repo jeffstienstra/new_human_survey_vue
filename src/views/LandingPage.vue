@@ -215,9 +215,6 @@ export default {
         console.log(userPeople);
         this.people = userPeople;
       });
-      // .catch((error) => {
-      //   this.errors = error.response.data.errors;
-      // });
     },
   },
 };

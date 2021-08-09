@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/signin">Sign In</router-link>
-      |
-      <router-link to="/signup">Sign Up</router-link>
-    </div> -->
+    <div id="nav">
+      <!-- <router-link to="/signin">Sign In</router-link> -->
+
+      <router-link to="/signout">Sign Out</router-link>
+    </div>
     <router-view />
   </div>
 </template>
