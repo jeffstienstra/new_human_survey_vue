@@ -93,7 +93,6 @@ export default {
       axios.get("/users/:id").then((response) => {
         console.log("userShow ->", response.data);
         console.log("#1", response.data.favorites.drinks[0].description);
-        // this.$router.push("/signin");
 
         //check survey status for user
         if (response.data.survey_complete == true) {

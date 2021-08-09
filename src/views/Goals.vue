@@ -47,7 +47,9 @@
             </div>
             <div class="col">
               <div class="d-grid gap-2 col-13 mx-auto">
-                <button type="submit" class="btn btn-primary btn-sm btn-block">Continue</button>
+                <button v-on:click="surveyComplete()" type="submit" class="btn btn-primary btn-sm btn-block">
+                  Continue
+                </button>
               </div>
             </div>
           </div>
@@ -79,6 +81,7 @@ export default {
     return {
       short_term_goals: "",
       long_term_goals: "",
+      data: [],
     };
   },
   created: function () {
@@ -86,12 +89,18 @@ export default {
   },
 
   methods: {
+    surveyComplete: function () {
+      console.log("surveyComplete", this.data);
+    },
+
     userShow: function () {
       console.log(this.user);
       axios.get("/users/:id").then((response) => {
         console.log("userShow ->", response.data);
         console.log("#1", response.data.favorites.drinks[0].description);
-        // this.$router.push("/signin");
+
+        var data = response.data;
+        console.log(data);
 
         //check survey status for user
         if (response.data.survey_complete == true) {
@@ -162,7 +171,7 @@ export default {
         .then((response) => {
           axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
-          this.$router.push("/landingpage");
+          // this.$router.push("/landingpage");
         })
         .catch((error) => {
           console.log(error.response);
