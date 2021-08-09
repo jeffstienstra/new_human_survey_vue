@@ -161,7 +161,6 @@ export default {
         } else {
           this.survey_complete = false;
         }
-        console.log("this.survey_complete", this.survey_complete);
 
         // get user's name
         this.name = response.data.abouts[0].name;
