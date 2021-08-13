@@ -27,22 +27,22 @@ const routes = [
     component: SignOut,
   },
   {
-    path: "/about",
+    path: "/about/:id",
     name: "about",
     component: About,
   },
   {
-    path: "/landingpage",
+    path: "/landingpage/:id",
     name: "landingpage",
     component: LandingPage,
   },
   {
-    path: "/favorites",
+    path: "/favorites/:id",
     name: "favorites",
     component: Favorites,
   },
   {
-    path: "/goals",
+    path: "/goals/:id",
     name: "goals",
     component: Goals,
   },

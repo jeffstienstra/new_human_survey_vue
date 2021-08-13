@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-link to="/landingpage">Landing Page</router-link>
+    <!-- <router-link :to="`/landingpage/${response.data.user_id}`">Landing Page</router-link> -->
     |
     <router-link to="/about">About</router-link>
     |

@@ -16,9 +16,9 @@
           </h5>
         </div>
         <div class="center">
-          <form action="/about">
+          <form :action="`/about/${this.user_id}`">
             <div class="d-grid gap-2 col-3 mx-auto">
-              <button type="submit" class="btn btn-primary btn-sm" action="/about">Start</button>
+              <button type="submit" class="btn btn-primary btn-sm" :action="`/about/${this.user_id}`">Start</button>
             </div>
           </form>
         </div>
@@ -64,7 +64,7 @@
       <br />
       <div>
         <h6 style="color: #999999"><strong>DRINKS</strong></h6>
-        <h6 v-for="drink in drinks" v-bind:key="drink.description">
+        <h6 v-for="drink in drinks" v-bind:key="drink">
           <strong>{{ drink }}</strong>
         </h6>
       </div>
@@ -88,9 +88,9 @@
       <br />
 
       <div class="center">
-        <form action="/about">
+        <form :action="`/about/${this.user_id}`">
           <div class="d-grid gap-2 col-3 mx-auto">
-            <button type="submit" class="btn btn-primary btn-sm" action="/about">Retake</button>
+            <button type="submit" class="btn btn-primary btn-sm" :action="`/about/${this.user_id}`">Retake</button>
           </div>
         </form>
       </div>
@@ -126,6 +126,7 @@ import axios from "axios";
 export default {
   data: function () {
     return {
+      user_id: this.$route.params.id,
       name: "",
       accomplishments: "",
       superpower: "",
@@ -140,19 +141,18 @@ export default {
   },
   mounted() {},
   created: function () {
-    // this.survey_status();
+    this.survey_status();
     this.userShow();
   },
   methods: {
-    // survey_status: function () {
-    //   console.log("user->", this.user);
-    //   return true;
-    // },
+    survey_status: function () {
+      console.log("user->", this.user);
+      return true;
+    },
     userShow: function () {
-      console.log(this.user);
-      axios.get("/users/:id").then((response) => {
+      console.log("user_id->", this.user_id);
+      axios.get(`/users/${this.user_id}`).then((response) => {
         console.log("userShow ->", response.data);
-        // console.log("#1", response.data.favorites.drinks[0].description);
 
         //check survey status for user
         console.log("user-survey", response.data.survey_complete);

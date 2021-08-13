@@ -40,15 +40,19 @@
         <div class="container">
           <div class="row">
             <div class="col">
-              <form action="/landingpage">
+              <form :action="`/landingpage/${this.user_id}`">
                 <div class="d-grid gap-0 col-13 mx-auto">
-                  <button type="submit" class="btn btn-secondary btn-sm" action="/landingpage">Back</button>
+                  <button type="submit" class="btn btn-secondary btn-sm" :action="`/landingpage/${this.user_id}`">
+                    Back
+                  </button>
                 </div>
               </form>
             </div>
             <div class="col">
               <div class="d-grid gap-2 col-13 mx-auto">
-                <button type="submit" class="btn btn-primary btn-sm btn-block">Continue</button>
+                <button type="submit" class="btn btn-primary btn-sm btn-block" :action="`/favorites/${this.user_id}`">
+                  Continue
+                </button>
               </div>
             </div>
           </div>
@@ -78,6 +82,8 @@ import axios from "axios";
 export default {
   data: function () {
     return {
+      user_id: this.$route.params.id,
+      id: null,
       name: "",
       accomplishments: "",
       superpower: "",
@@ -89,42 +95,56 @@ export default {
   },
   methods: {
     userShow: function () {
-      console.log(this.user);
-      axios.get("/users/:id").then((response) => {
-        console.log("userShow ->", response.data);
-        console.log("#1", response.data.favorites.drinks[0].description);
+      axios.get(`/users/${this.user_id}`).then((response) => {
+        if (response.data.abouts.length > 0) {
+          console.log("userShow ->", response.data);
 
-        // get user's name
-        this.name = response.data.abouts[0].name;
-        console.log("name ->", response.data.abouts[0].name);
+          this.id = response.data.abouts[0].id;
+          // get user's name
+          this.name = response.data.abouts[0].name;
+          console.log("name ->", response.data.abouts[0].name);
 
-        //get user's accomplishments
-        this.accomplishments = response.data.abouts[0].accomplishments;
-        console.log("acomplishments ->", response.data.abouts[0].accomplishments);
+          //get user's accomplishments
+          this.accomplishments = response.data.abouts[0].accomplishments;
+          console.log("acomplishments ->", response.data.abouts[0].accomplishments);
 
-        //get user's superpower
-        this.superpower = response.data.abouts[0].superpower;
-        console.log("superpower ->", response.data.abouts[0].superpower);
+          //get user's superpower
+          this.superpower = response.data.abouts[0].superpower;
+          console.log("superpower ->", response.data.abouts[0].superpower);
+        }
       });
     },
     submit: function () {
       var params = {
+        id: this.id,
         name: this.name,
         accomplishments: this.accomplishments,
         superpower: this.superpower,
       };
       console.log(params);
-      axios
-        .post("/about", params)
-        .then((response) => {
-          axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
-          localStorage.setItem("jwt", response.data.jwt);
-          this.$router.push("/favorites");
-        })
-        .catch((error) => {
-          console.log(error.response);
-          this.errors = error.response.data.errors;
-        });
+      if (this.id) {
+        axios
+          .patch(`/about/${this.id}`, params)
+          .then((response) => {
+            axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
+            this.$router.push(`/favorites/${response.data.user_id}`);
+          })
+          .catch((error) => {
+            console.log(error.response);
+            this.errors = error.response.data.errors;
+          });
+      } else {
+        axios
+          .post("/about", params)
+          .then((response) => {
+            axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
+            this.$router.push(`/favorites/${response.data.user_id}`);
+          })
+          .catch((error) => {
+            console.log(error.response);
+            this.errors = error.response.data.errors;
+          });
+      }
     },
   },
 };

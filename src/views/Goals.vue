@@ -39,9 +39,11 @@
         <div class="container">
           <div class="row">
             <div class="col">
-              <form action="/favorites">
+              <form :action="`/favorites/${this.user_id}`">
                 <div class="d-grid gap-0 col-13 mx-auto">
-                  <button type="submit" class="btn btn-secondary btn-sm" action="/favorites">Back</button>
+                  <button type="submit" class="btn btn-secondary btn-sm" :action="`/favorites/${this.user_id}`">
+                    Back
+                  </button>
                 </div>
               </form>
             </div>
@@ -79,6 +81,7 @@ import axios from "axios";
 export default {
   data: function () {
     return {
+      user_id: this.$route.params.user_id,
       short_term_goals: "",
       long_term_goals: "",
       data: [],
@@ -96,38 +99,52 @@ export default {
     userShow: function () {
       console.log(this.user);
       axios.get("/users/:id").then((response) => {
-        console.log("userShow ->", response.data);
-        console.log("#1", response.data.favorites.drinks[0].description);
+        if (response.data.goals.length > 0) {
+          console.log("userShow ->", response.data);
 
-        var data = response.data;
-        console.log(data);
+          var data = response.data;
+          console.log(data);
 
-        //get user's short_term_goals
-        this.short_term_goals = response.data.goals[0].short_term_goal;
-        console.log("short_term_goals ->", response.data.goals[0].short_term_goal);
+          //get user's short_term_goals
+          this.short_term_goals = response.data.goals[0].short_term_goal;
+          console.log("short_term_goals ->", response.data.goals[0].short_term_goal);
 
-        //get user's long_term_goals
-        this.long_term_goals = response.data.goals[0].long_term_goal;
-        console.log("long_term_goals ->", response.data.goals[0].long_term_goal);
+          //get user's long_term_goals
+          this.long_term_goals = response.data.goals[0].long_term_goal;
+          console.log("long_term_goals ->", response.data.goals[0].long_term_goal);
+        }
       });
     },
     submit: function () {
       var params = {
+        survey_complete: true,
         short_term_goals: this.short_term_goals,
         long_term_goals: this.long_term_goals,
       };
       console.log(params);
-      axios
-        .post("/goals", params)
-        .then((response) => {
-          axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
-          localStorage.setItem("jwt", response.data.jwt);
-          this.$router.push("/landingpage");
-        })
-        .catch((error) => {
-          console.log(error.response);
-          this.errors = error.response;
-        });
+      if (this.id) {
+        axios
+          .patch(`/goals/${this.id}`, params)
+          .then((response) => {
+            axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
+            this.$router.push(`/landingpage/${response.data.user_id}`);
+          })
+          .catch((error) => {
+            console.log(error.response);
+            this.errors = error.response.data.errors;
+          });
+      } else {
+        axios
+          .post("/goals", params)
+          .then((response) => {
+            axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
+            this.$router.push(`/landingpage/${response.data.user_id}`);
+          })
+          .catch((error) => {
+            console.log(error.response);
+            this.errors = error.response.data.errors;
+          });
+      }
     },
   },
 };
