@@ -23,7 +23,7 @@
     </div>
 
     <div class="center">
-      <form v-on:submit.prevent="submit()">
+      <form v-on:submit.prevent="submit()" :action="`/favorites/${this.user_id}`">
         <div class="mb-3">
           <label for="" class="form-label">Name</label>
           <input type="text" class="form-control" v-model="name" />

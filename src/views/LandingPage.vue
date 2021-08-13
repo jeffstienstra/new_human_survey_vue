@@ -141,14 +141,13 @@ export default {
   },
   mounted() {},
   created: function () {
-    this.survey_status();
+    // this.survey_status();
     this.userShow();
   },
   methods: {
-    survey_status: function () {
-      console.log("user->", this.user);
-      return true;
-    },
+    // survey_status: function () {
+    //   return true;
+    // },
     userShow: function () {
       console.log("user_id->", this.user_id);
       axios.get(`/users/${this.user_id}`).then((response) => {
@@ -183,34 +182,46 @@ export default {
         console.log("long_term_goals ->", response.data.goals[0].long_term_goal);
 
         // get user's drinks
-        var userDrinks = [];
-        var i = 0;
-        while (i < response.data.favorites.drinks.length) {
-          userDrinks.push(response.data.favorites.drinks[i].description);
-          i++;
+        if (response.data.favorites.drinks) {
+          var userDrinks = [];
+          var i = 0;
+          while (i < response.data.favorites.drinks.length) {
+            userDrinks.push(response.data.favorites.drinks[i].description);
+            i++;
+          }
+          console.log(userDrinks);
+          this.drinks = userDrinks;
+        } else {
+          this.drinks = [];
         }
-        console.log(userDrinks);
-        this.drinks = userDrinks;
 
         // get user's snacks
-        var userSnacks = [];
-        i = 0;
-        while (i < response.data.favorites.snacks.length) {
-          userSnacks.push(response.data.favorites.snacks[i].description);
-          i++;
+        if (response.data.favorites.snacks) {
+          var userSnacks = [];
+          i = 0;
+          while (i < response.data.favorites.snacks.length) {
+            userSnacks.push(response.data.favorites.snacks[i].description);
+            i++;
+          }
+          console.log(userSnacks);
+          this.snacks = userSnacks;
+        } else {
+          this.snacks = [];
         }
-        console.log(userSnacks);
-        this.snacks = userSnacks;
 
         // get user's people
-        var userPeople = [];
-        i = 0;
-        while (i < response.data.favorites.people.length) {
-          userPeople.push(response.data.favorites.people[i].description);
-          i++;
+        if (response.data.favorites.people) {
+          var userPeople = [];
+          i = 0;
+          while (i < response.data.favorites.people.length) {
+            userPeople.push(response.data.favorites.people[i].description);
+            i++;
+          }
+          console.log(userPeople);
+          this.people = userPeople;
+        } else {
+          this.people = [];
         }
-        console.log(userPeople);
-        this.people = userPeople;
       });
     },
   },

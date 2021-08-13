@@ -82,8 +82,10 @@ export default {
   data: function () {
     return {
       user_id: this.$route.params.user_id,
+      id: null,
       short_term_goals: "",
       long_term_goals: "",
+      survey_complete: true,
       data: [],
     };
   },
@@ -97,13 +99,14 @@ export default {
     },
 
     userShow: function () {
-      console.log(this.user);
-      axios.get("/users/:id").then((response) => {
+      axios.get(`/users/${this.user_id}`).then((response) => {
         if (response.data.goals.length > 0) {
           console.log("userShow ->", response.data);
 
-          var data = response.data;
-          console.log(data);
+          // var data = response.data;
+          // console.log(data);
+
+          this.id = response.data.goals[0].id;
 
           //get user's short_term_goals
           this.short_term_goals = response.data.goals[0].short_term_goal;
@@ -117,6 +120,8 @@ export default {
     },
     submit: function () {
       var params = {
+        user_id: this.$route.params.id,
+        id: this.id,
         survey_complete: true,
         short_term_goals: this.short_term_goals,
         long_term_goals: this.long_term_goals,
@@ -125,9 +130,9 @@ export default {
       if (this.id) {
         axios
           .patch(`/goals/${this.id}`, params)
-          .then((response) => {
+          .then(() => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
-            this.$router.push(`/landingpage/${response.data.user_id}`);
+            // this.$router.push(`/landingpage/${response.data.user_id}`);
           })
           .catch((error) => {
             console.log(error.response);
@@ -135,16 +140,20 @@ export default {
           });
       } else {
         axios
-          .post("/goals", params)
-          .then((response) => {
+          .post(`/goals`, params)
+          .then(() => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
-            this.$router.push(`/landingpage/${response.data.user_id}`);
+            // this.$router.push(`/landingpage/${response.data.user_id}`);
           })
           .catch((error) => {
             console.log(error.response);
             this.errors = error.response.data.errors;
           });
       }
+      axios.patch(`/users/${this.$route.params.id}`, this.survey_complete).then((response) => {
+        axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
+        console.log("users patch", response.data);
+      });
     },
   },
 };

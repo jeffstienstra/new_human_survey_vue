@@ -20,8 +20,10 @@
     </div>
 
     <div class="center">
-      <form v-on:submit.prevent="submit()">
+      <form v-on:submit.prevent="submit()" :action="`/goals/${this.user_id}`">
         <label for="" class="form-label">Drinks</label>
+        <input type="text" class="form-control" v-model="drinks" />
+
         <div v-for="drink in drinks" v-bind:key="drink">
           <input type="text" class="form-control" v-model="drinks" />
         </div>
@@ -77,7 +79,7 @@
             <div class="col">
               <form :action="`/about/${this.user_id}`">
                 <div class="d-grid gap-0 col-13 mx-auto">
-                  <button type="submit" class="btn btn-secondary btn-sm" :action="`/goals/${this.user_id}`">
+                  <button type="submit" class="btn btn-secondary btn-sm" :action="`/about/${this.user_id}`">
                     Back
                   </button>
                 </div>
@@ -122,6 +124,7 @@ export default {
   data: function () {
     return {
       user_id: this.$route.params.id,
+      id: null,
       drinks: [],
       snacks: [],
       people: [],
@@ -136,16 +139,19 @@ export default {
       this.drinks.push({ description: "" });
     },
     userShow: function () {
-      console.log(this.user);
-      axios.get("/users/:id").then((response) => {
-        if (response.data.favorites.length > 0) {
+      axios.get(`/users/${this.user_id}`).then((response) => {
+        console.log(response.data);
+        if (response.data.favorites.drinks) {
           console.log("userShow ->", response.data);
 
+          // this.id = response.data.favorites[0].id;
+
           // get user's drinks
-          var userDrinks = [];
+          var userDrinks = {};
           var i = 0;
           while (i < response.data.favorites.drinks.length) {
-            userDrinks.push(response.data.favorites.drinks[i].description);
+            // userDrinks.push(response.data.favorites.drinks[i]);
+            userDrinks.i = response.data.favorites.drinks[i];
             i++;
           }
           this.drinks = userDrinks;
@@ -155,7 +161,7 @@ export default {
           var userSnacks = [];
           i = 0;
           while (i < response.data.favorites.snacks.length) {
-            userSnacks.push(response.data.favorites.snacks[i].description);
+            userSnacks.push(response.data.favorites.snacks[i]);
             i++;
           }
           console.log(userSnacks);
@@ -165,17 +171,20 @@ export default {
           var userPeople = [];
           i = 0;
           while (i < response.data.favorites.people.length) {
-            userPeople.push(response.data.favorites.people[i].description);
+            userPeople.push(response.data.favorites.people[i]);
             i++;
           }
           console.log(userPeople);
           this.people = userPeople;
+        } else {
+          console.log("else");
         }
       });
     },
     submit: function () {
       var params = {
-        id: this.id,
+        user_id: this.$route.params.id,
+        id: null,
         drinks: this.drinks,
         snacks: this.snacks,
         people: this.people,
