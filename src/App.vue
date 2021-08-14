@@ -1,19 +1,5 @@
 <template>
   <div id="app">
-    <!-- <router-link :to="`/landingpage/${response.data.user_id}`">Landing Page</router-link>
-    |
-    <router-link to="/about">About</router-link>
-    |
-    <router-link to="/favorites">Favorites</router-link>
-    |
-    <router-link to="/goals">Goals</router-link>
-    |
-    <router-link to="/">Sign Up</router-link>
-    |
-    <router-link to="/signin">Sign In</router-link>
-    |
-    <router-link to="/signout">Sign Out</router-link> -->
-
     <router-view />
   </div>
 </template>
@@ -41,14 +27,10 @@
 }
 
 /* @font-face {
-  src: url(fonts/nightype.ttf);
-  font-family: "nightype";
+  font-family: "Nightype";
+  src: local("Nightype"), url(/public/fonts/nightype.ttf) format("truetype");
   font-style: normal;
   font-weight: 100;
-} */
-
-/* .title {
-  font-family: nightype;
 } */
 
 body {

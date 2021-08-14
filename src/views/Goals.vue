@@ -23,14 +23,12 @@
       <form v-on:submit.prevent="submit()">
         <div class="mb-3">
           <label for="" class="form-label">What are your short term goals?</label>
-          <!-- <input type="text" class="form-control" v-model="short_term_goals" /> -->
           <div class="input-group">
             <textarea type="text" class="form-control" v-model="short_term_goals"></textarea>
           </div>
         </div>
         <div class="mb-3">
           <label for="" class="form-label">What are your long term goals?</label>
-          <!-- <input type="text" class="form-control" v-model="long_term_goals" /> -->
           <div class="input-group">
             <textarea type="text" class="form-control" v-model="long_term_goals"></textarea>
           </div>
@@ -103,9 +101,6 @@ export default {
         if (response.data.goals.length > 0) {
           console.log("userShow ->", response.data);
 
-          // var data = response.data;
-          // console.log(data);
-
           this.id = response.data.goals[0].id;
 
           //get user's short_term_goals
@@ -130,9 +125,9 @@ export default {
       if (this.id) {
         axios
           .patch(`/goals/${this.id}`, params)
-          .then(() => {
+          .then((response) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
-            // this.$router.push(`/landingpage/${response.data.user_id}`);
+            this.$router.push(`/landingpage/${response.data.user_id}`);
           })
           .catch((error) => {
             console.log(error.response);
@@ -141,9 +136,9 @@ export default {
       } else {
         axios
           .post(`/goals`, params)
-          .then(() => {
+          .then((response) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
-            // this.$router.push(`/landingpage/${response.data.user_id}`);
+            this.$router.push(`/landingpage/${response.data.user_id}`);
           })
           .catch((error) => {
             console.log(error.response);

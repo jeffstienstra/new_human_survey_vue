@@ -141,13 +141,9 @@ export default {
   },
   mounted() {},
   created: function () {
-    // this.survey_status();
     this.userShow();
   },
   methods: {
-    // survey_status: function () {
-    //   return true;
-    // },
     userShow: function () {
       console.log("user_id->", this.user_id);
       axios.get(`/users/${this.user_id}`).then((response) => {

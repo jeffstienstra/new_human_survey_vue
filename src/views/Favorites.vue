@@ -22,12 +22,10 @@
     <div class="center">
       <form v-on:submit.prevent="submit()" :action="`/goals/${this.user_id}`">
         <label for="" class="form-label">Drinks</label>
-
         <div v-for="drink in drinks" v-bind:key="drink.id">
           <input type="text" class="form-control" v-model="drink.description" />
         </div>
         <form :action="`/goals/${this.user_id}`">
-          <!-- \/  need to add v-on:click="addField()" functionality \/ -->
           <button v-on:click="addDrinkField()" style="color: #e24c27" type="button" class="btn btn-light">
             +Add another
           </button>
@@ -41,7 +39,6 @@
         </div>
         <div>
           <form action="">
-            <!-- \/  need to add v-on:click="addField()" functionality \/ -->
             <button v-on:click="addSnackField()" style="color: #e24c27" type="button" class="btn btn-light">
               +Add another
             </button>
@@ -56,13 +53,13 @@
         </div>
         <div>
           <form action="">
-            <!-- \/  need to add v-on:click="addField()" functionality \/ -->
             <button v-on:click="addPersonField()" style="color: #e24c27" type="button" class="btn btn-light">
               +Add another
             </button>
           </form>
         </div>
         <br />
+
         <div class="container">
           <div class="row">
             <div class="col">
@@ -186,8 +183,6 @@ export default {
         } else {
           console.log("else");
         }
-        // response.data.favorites.push(this.drinks);
-        console.log("favorites hash", response.data.favorites);
       });
     },
     submit: function () {
@@ -202,9 +197,9 @@ export default {
       if (this.id) {
         axios
           .patch(`/favorites/${this.id}`, params)
-          .then(() => {
+          .then((response) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
-            // this.$router.push(`/goals/${response.data.user_id}`);
+            this.$router.push(`/goals/${response.data.user_id}`);
           })
           .catch((error) => {
             console.log(error.response);
@@ -213,19 +208,15 @@ export default {
       } else {
         axios
           .post("/favorites", params)
-          .then(() => {
+          .then((response) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
-            // this.$router.push(`/goals/${response.data.user_id}`);
+            this.$router.push(`/goals/${response.data.user_id}`);
           })
           .catch((error) => {
             console.log(error.response);
             this.errors = error.response.data.errors;
           });
       }
-      // axios.post("/favorites", params).then((response) => {
-      //   axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
-      //   this.$router.push(`/goals/${response.data.user_id}`);
-      // });
     },
   },
 };

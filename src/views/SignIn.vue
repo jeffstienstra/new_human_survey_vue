@@ -8,7 +8,6 @@
     <div class="center">
       <form v-on:submit.prevent="submit()">
         <div class="mb-3">
-          <!-- can add "is-invalid" to label's class to get red text box outline when errors occur -->
           <label for="exampleInputEmail1" class="form-label">Email address</label>
           <input
             type="email"

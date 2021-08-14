@@ -3,7 +3,7 @@
     <br />
     <br />
     <div class="">
-      <h1 style="color: #e24c27">Sign up</h1>
+      <h1 class="title" style="color: #e24c27">Sign up</h1>
     </div>
     <div class="center">
       <form v-on:submit.prevent="submit()">
@@ -52,6 +52,11 @@
 .btn-primary:visited {
   background-color: #e24c27 !important;
 }
+/* .title {
+  font-family: "Nightype", Helvetica, Arial;
+  font-style: normal;
+  font-weight: 100;
+} */
 .center {
   margin: auto;
   width: 30%;
