@@ -22,33 +22,27 @@
     <div class="center">
       <form v-on:submit.prevent="submit()" :action="`/goals/${this.user_id}`">
         <label for="" class="form-label">Drinks</label>
-        <input type="text" class="form-control" v-model="drinks" />
 
-        <div v-for="drink in drinks" v-bind:key="drink">
-          <input type="text" class="form-control" v-model="drinks" />
+        <div v-for="drink in drinks" v-bind:key="drink.id">
+          <input type="text" class="form-control" v-model="drink.description" />
         </div>
         <form :action="`/goals/${this.user_id}`">
           <!-- \/  need to add v-on:click="addField()" functionality \/ -->
-          <button v-on:click="addField()" style="color: #e24c27" type="button" class="btn btn-light">
+          <button v-on:click="addDrinkField()" style="color: #e24c27" type="button" class="btn btn-light">
             +Add another
           </button>
         </form>
 
         <div class="mb-3">
           <label for="" class="form-label">Snacks</label>
-          <input type="text" class="form-control" v-model="snacks" />
+          <div v-for="snack in snacks" v-bind:key="snack.id">
+            <input type="text" class="form-control" v-model="snack.description" />
+          </div>
         </div>
         <div>
-          <!-- <input
-            v-for="snack in snacks"
-            v-bind:key="snack.description"
-            type="text"
-            class="form-control"
-            v-model="snacks"
-          /> -->
           <form action="">
             <!-- \/  need to add v-on:click="addField()" functionality \/ -->
-            <button v-on:click="addField()" style="color: #e24c27" type="button" class="btn btn-light">
+            <button v-on:click="addSnackField()" style="color: #e24c27" type="button" class="btn btn-light">
               +Add another
             </button>
           </form>
@@ -56,19 +50,14 @@
 
         <div class="mb-3">
           <label for="" class="form-label">People</label>
-          <input type="text" class="form-control" v-model="people" />
+          <div v-for="person in people" v-bind:key="person.id">
+            <input type="text" class="form-control" v-model="person.description" />
+          </div>
         </div>
         <div>
-          <!-- <input
-            v-for="person in people"
-            v-bind:key="person.description"
-            type="text"
-            class="form-control"
-            v-model="people"
-          /> -->
           <form action="">
             <!-- \/  need to add v-on:click="addField()" functionality \/ -->
-            <button v-on:click="addField()" style="color: #e24c27" type="button" class="btn btn-light">
+            <button v-on:click="addPersonField()" style="color: #e24c27" type="button" class="btn btn-light">
               +Add another
             </button>
           </form>
@@ -125,9 +114,9 @@ export default {
     return {
       user_id: this.$route.params.id,
       id: null,
-      drinks: [],
-      snacks: [],
-      people: [],
+      drinks: [{ user_id: this.$route.params.id, category: "drink", description: "" }],
+      snacks: [{ user_id: this.$route.params.id, category: "snack", description: "" }],
+      people: [{ user_id: this.$route.params.id, category: "person", description: "" }],
     };
   },
   created: function () {
@@ -135,8 +124,26 @@ export default {
   },
 
   methods: {
-    addField: function () {
-      this.drinks.push({ description: "" });
+    addDrinkField: function () {
+      this.drinks.push({
+        user_id: this.user_id,
+        category: "drink",
+        description: "",
+      });
+    },
+    addSnackField: function () {
+      this.snacks.push({
+        user_id: this.user_id,
+        category: "snack",
+        description: "",
+      });
+    },
+    addPersonField: function () {
+      this.people.push({
+        user_id: this.user_id,
+        category: "person",
+        description: "",
+      });
     },
     userShow: function () {
       axios.get(`/users/${this.user_id}`).then((response) => {
@@ -144,41 +151,43 @@ export default {
         if (response.data.favorites.drinks) {
           console.log("userShow ->", response.data);
 
-          // this.id = response.data.favorites[0].id;
-
           // get user's drinks
           var userDrinks = {};
           var i = 0;
           while (i < response.data.favorites.drinks.length) {
-            // userDrinks.push(response.data.favorites.drinks[i]);
-            userDrinks.i = response.data.favorites.drinks[i];
+            userDrinks[i] = response.data.favorites.drinks[i];
             i++;
           }
           this.drinks = userDrinks;
-          console.log(userDrinks);
-
+          console.log("drinks", userDrinks);
+        }
+        if (response.data.favorites.snacks) {
           // get user's snacks
           var userSnacks = [];
           i = 0;
           while (i < response.data.favorites.snacks.length) {
-            userSnacks.push(response.data.favorites.snacks[i]);
+            userSnacks[i] = response.data.favorites.snacks[i];
             i++;
           }
-          console.log(userSnacks);
+          console.log("snacks", userSnacks);
           this.snacks = userSnacks;
-
+        }
+        if (response.data.favorites.people) {
           // get user's people
           var userPeople = [];
           i = 0;
           while (i < response.data.favorites.people.length) {
-            userPeople.push(response.data.favorites.people[i]);
+            userPeople[i] = response.data.favorites.people[i];
             i++;
           }
-          console.log(userPeople);
+
+          console.log("people", userPeople);
           this.people = userPeople;
         } else {
           console.log("else");
         }
+        // response.data.favorites.push(this.drinks);
+        console.log("favorites hash", response.data.favorites);
       });
     },
     submit: function () {
@@ -193,9 +202,9 @@ export default {
       if (this.id) {
         axios
           .patch(`/favorites/${this.id}`, params)
-          .then((response) => {
+          .then(() => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
-            this.$router.push(`/goals/${response.data.user_id}`);
+            // this.$router.push(`/goals/${response.data.user_id}`);
           })
           .catch((error) => {
             console.log(error.response);
@@ -204,9 +213,9 @@ export default {
       } else {
         axios
           .post("/favorites", params)
-          .then((response) => {
+          .then(() => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("jwt");
-            this.$router.push(`/goals/${response.data.user_id}`);
+            // this.$router.push(`/goals/${response.data.user_id}`);
           })
           .catch((error) => {
             console.log(error.response);
