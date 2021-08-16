@@ -2,7 +2,7 @@
   <div class="landingpage">
     <br />
     <br />
-    <div class="">
+    <div class="title">
       <h1 style="color: #e24c27">Sign in</h1>
     </div>
     <div class="center">
@@ -27,7 +27,7 @@
         </div>
 
         <div class="d-grid gap-2 col-12 mx-auto">
-          <button type="submit" class="btn btn-primary btn-sm btn-block">Submit</button>
+          <button type="submit" class="btn btn-primary btn-sm btn-block">Sign In</button>
         </div>
       </form>
     </div>
@@ -42,12 +42,19 @@
 </template>
 
 <style>
+.title {
+  font-family: "Nightype", Helvetica, Arial;
+  font-style: normal;
+  font-weight: 100;
+}
+
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:visited {
   background-color: #e24c27 !important;
 }
+
 .center {
   margin: auto;
   width: 30%;

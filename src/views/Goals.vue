@@ -2,7 +2,59 @@
   <div class="goals">
     <br />
     <br />
+
     <div class="center">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="d-grid gap-0 col-18 mx-auto">
+              <div id="complete" class="progress" style="height: 10px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 100%"
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="d-grid gap-0 col-18 mx-auto">
+              <div class="progress" style="height: 10px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 100%"
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="d-grid gap-0 col-18 mx-auto">
+              <div class="progress" style="height: 10px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 100%"
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="center">
       <div class="progress" style="height: 10px">
         <div
           class="progress-bar"
@@ -13,9 +65,10 @@
           aria-valuemax="100"
         ></div>
       </div>
-    </div>
+    </div> -->
+
     <br />
-    <div>
+    <div class="title">
       <h1 style="color: #e24c27">Goals</h1>
     </div>
 
@@ -48,7 +101,7 @@
             <div class="col">
               <div class="d-grid gap-2 col-13 mx-auto">
                 <button v-on:click="surveyComplete()" type="submit" class="btn btn-primary btn-sm btn-block">
-                  Continue
+                  Complete
                 </button>
               </div>
             </div>
@@ -67,6 +120,13 @@
 .btn-primary:visited {
   background-color: #e24c27 !important;
 }
+
+.title {
+  font-family: "Nightype", Helvetica, Arial;
+  font-style: normal;
+  font-weight: 100;
+}
+
 .btn-secondary {
   background-color: #dadada !important;
   color: #404040;

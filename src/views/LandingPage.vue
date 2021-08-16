@@ -5,7 +5,7 @@
       <br />
       <br />
       <div>
-        <h1 style="color: #e24c27">New Human Survey</h1>
+        <h1 class="title" style="color: #e24c27">New Human Survey</h1>
         <div class="center">
           <h5>
             <center>
@@ -30,7 +30,7 @@
       <br />
       <br />
       <div>
-        <h1 style="color: #e24c27">All about you</h1>
+        <h1 class="title" style="color: #e24c27">All about you</h1>
       </div>
       <br />
       <div>
@@ -108,6 +108,13 @@
 .btn-primary:visited {
   background-color: #e24c27 !important;
 }
+
+.title {
+  font-family: "Nightype", Helvetica, Arial;
+  font-style: normal;
+  font-weight: 100;
+}
+
 .center {
   margin: auto;
   width: 30%;

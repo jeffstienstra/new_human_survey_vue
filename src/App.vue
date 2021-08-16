@@ -5,6 +5,13 @@
 </template>
 
 <style>
+@font-face {
+  font-family: "Nightype";
+  src: local("Nightype"), url(./fonts/Nightype/Nightype.ttf) format("truetype");
+  font-style: normal;
+  font-weight: 100;
+  font-size: 200 !important;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -25,13 +32,6 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
-/* @font-face {
-  font-family: "Nightype";
-  src: local("Nightype"), url(/public/fonts/nightype.ttf) format("truetype");
-  font-style: normal;
-  font-weight: 100;
-} */
 
 body {
   background-color: #fafcfe !important;

@@ -31,7 +31,7 @@
         </div>
 
         <div class="d-grid gap-2 col-12 mx-auto">
-          <button type="submit" class="btn btn-primary btn-sm btn-block">Submit</button>
+          <button type="submit" class="btn btn-primary btn-sm btn-block">Sign Up</button>
         </div>
       </form>
     </div>
@@ -52,11 +52,12 @@
 .btn-primary:visited {
   background-color: #e24c27 !important;
 }
-/* .title {
+
+.title {
   font-family: "Nightype", Helvetica, Arial;
   font-style: normal;
   font-weight: 100;
-} */
+}
 .center {
   margin: auto;
   width: 30%;

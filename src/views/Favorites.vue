@@ -2,7 +2,59 @@
   <div class="favorites">
     <br />
     <br />
+
     <div class="center">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="d-grid gap-0 col-18 mx-auto">
+              <div id="complete" class="progress" style="height: 10px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 100%"
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="d-grid gap-0 col-18 mx-auto">
+              <div class="progress" style="height: 10px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 100%"
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="d-grid gap-0 col-18 mx-auto">
+              <div class="progress" style="height: 10px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 0%"
+                  aria-valuenow="33"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="center">
       <div class="progress" style="height: 10px">
         <div
           class="progress-bar"
@@ -13,7 +65,7 @@
           aria-valuemax="100"
         ></div>
       </div>
-    </div>
+    </div> -->
     <br />
     <div>
       <h1 class="title" style="color: #e24c27">Your favorites</h1>
@@ -21,23 +73,23 @@
 
     <div class="center">
       <form v-on:submit.prevent="submit()" :action="`/goals/${this.user_id}`">
-        <label for="" class="form-label">Drinks</label>
-        <div v-for="drink in drinks" v-bind:key="drink.id">
-          <input type="text" class="form-control" v-model="drink.description" />
+        <div class="mb-3">
+          <label for="" class="form-label">Drinks</label>
+          <div v-for="drink in drinks" v-bind:key="drink.id">
+            <input type="text" class="form-control" v-model="drink.description" />
+          </div>
+          <form :action="`/goals/${this.user_id}`">
+            <button v-on:click="addDrinkField()" style="color: #e24c27" type="button" class="btn btn-light">
+              +Add another
+            </button>
+          </form>
         </div>
-        <form :action="`/goals/${this.user_id}`">
-          <button v-on:click="addDrinkField()" style="color: #e24c27" type="button" class="btn btn-light">
-            +Add another
-          </button>
-        </form>
 
         <div class="mb-3">
           <label for="" class="form-label">Snacks</label>
           <div v-for="snack in snacks" v-bind:key="snack.id">
             <input type="text" class="form-control" v-model="snack.description" />
           </div>
-        </div>
-        <div>
           <form action="">
             <button v-on:click="addSnackField()" style="color: #e24c27" type="button" class="btn btn-light">
               +Add another
@@ -50,8 +102,6 @@
           <div v-for="person in people" v-bind:key="person.id">
             <input type="text" class="form-control" v-model="person.description" />
           </div>
-        </div>
-        <div>
           <form action="">
             <button v-on:click="addPersonField()" style="color: #e24c27" type="button" class="btn btn-light">
               +Add another
@@ -101,6 +151,9 @@
   background-color: #dadada !important;
   color: #404040;
 }
+#complete {
+  background-color: red !important;
+}
 </style>
 
 <script>
@@ -116,9 +169,10 @@ export default {
       people: [{ user_id: this.$route.params.id, category: "person", description: "" }],
     };
   },
-  created: function () {
+  mounted: function () {
     this.userShow();
   },
+  created: function () {},
 
   methods: {
     addDrinkField: function () {
@@ -145,10 +199,11 @@ export default {
     userShow: function () {
       axios.get(`/users/${this.user_id}`).then((response) => {
         console.log(response.data);
+
+        // get user's drinks
         if (response.data.favorites.drinks) {
           console.log("userShow ->", response.data);
 
-          // get user's drinks
           var userDrinks = {};
           var i = 0;
           while (i < response.data.favorites.drinks.length) {
@@ -158,8 +213,9 @@ export default {
           this.drinks = userDrinks;
           console.log("drinks", userDrinks);
         }
+
+        // get user's snacks
         if (response.data.favorites.snacks) {
-          // get user's snacks
           var userSnacks = [];
           i = 0;
           while (i < response.data.favorites.snacks.length) {
@@ -169,8 +225,9 @@ export default {
           console.log("snacks", userSnacks);
           this.snacks = userSnacks;
         }
+
+        // get user's people
         if (response.data.favorites.people) {
-          // get user's people
           var userPeople = [];
           i = 0;
           while (i < response.data.favorites.people.length) {
@@ -188,7 +245,7 @@ export default {
     submit: function () {
       var params = {
         user_id: this.$route.params.id,
-        id: null,
+        // id: null,
         drinks: this.drinks,
         snacks: this.snacks,
         people: this.people,
