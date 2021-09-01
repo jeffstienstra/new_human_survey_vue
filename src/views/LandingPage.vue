@@ -9,9 +9,9 @@
         <div class="center">
           <h5>
             <center>
-              Welcome! We are so excited that you are joining the Mutually Human team. Before your first day, we'd love
-              to learn a little bit about you. Please answer a few of the following questions and let us know if you
-              have any questions before your first day.
+              Welcome! We are so excited that you are joining the team. Before your first day, we'd love to learn a
+              little bit about you. Please answer a few of the following questions and let us know if you have any
+              questions before your first day.
             </center>
           </h5>
         </div>
